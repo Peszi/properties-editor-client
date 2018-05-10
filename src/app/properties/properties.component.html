@@ -15,11 +15,11 @@
     <!-- Properties editor -->
     <tr>
       <td>
-        <app-property-editor (propertyInputChanged)="onInputChanged($event)"></app-property-editor>
+        <app-property-editor (propertyInputChanged)="onInputChanged($event)" [propertySubject]="propertySubject"></app-property-editor>
       </td>
     </tr>
     <!-- Properties list -->
-    <tr *ngFor="let property of properties" (click)="onPropertyPicked(property)" [ngClass]="property.isActive() ? 'table-success' : ''">
+    <tr *ngFor="let property of properties" (click)="onPropertyPicked(property)" [ngClass]="property.getHighlightClass()">
       <td>
         <app-property-item [property]="property" ></app-property-item>
       </td>
