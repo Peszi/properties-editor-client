@@ -1,0 +1,28 @@
+<table class="table table-striped table-light">
+  <thead>
+    <!-- Table header -->
+    <tr>
+      <th scope="col">
+        <div class="row">
+          <div class="col-md-7 sm-padding">Key</div>
+          <div class="col-md-4 sm-padding">Value</div>
+          <div class="col-md-1 sm-padding">Action</div>
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Properties editor -->
+    <tr>
+      <td>
+        <app-property-editor (propertyInputChanged)="onInputChanged($event)"></app-property-editor>
+      </td>
+    </tr>
+    <!-- Properties list -->
+    <tr *ngFor="let property of properties" (click)="onPropertyPicked(property)" [ngClass]="property.isActive() ? 'table-success' : ''">
+      <td>
+        <app-property-item [property]="property" ></app-property-item>
+      </td>
+    </tr>
+  </tbody>
+</table>
