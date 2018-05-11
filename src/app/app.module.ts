@@ -7,6 +7,9 @@ import { PropertiesComponent } from "./properties/properties.component";
 import { PropertyEditorComponent } from "./properties/property-editor/property-editor.component";
 import { PropertyItemComponent } from "./properties/property-item/property-item.component";
 import { HeaderComponent } from './header/header.component';
+import { TestComponent } from './properties/test/test.component';
+import {PropertiesService} from "./properties/properties.service";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -14,13 +17,15 @@ import { HeaderComponent } from './header/header.component';
     PropertiesComponent,
     PropertyEditorComponent,
     PropertyItemComponent,
-    HeaderComponent
+    HeaderComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [PropertiesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

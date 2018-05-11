@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Output} from "@angular/core";
 import {Property} from "./property-item/property.model";
 import {Subject} from "rxjs/Subject";
+import {PropertiesService} from "./properties.service";
+import {debug} from "util";
 
 @Component({
   selector: 'app-properties',
@@ -10,11 +12,6 @@ export class PropertiesComponent {
   propertySubject:Subject<Property> = new Subject();
 
   properties: Property[] = [
-    new Property('spring.h2.console.enabled', 'true'),
-    new Property('spring.jpa.show-sql', 'true'),
-    new Property('spring.jpa.hibernate.ddl-auto', 'create-drop'),
-    new Property('spring.datasource.platform', 'h2'),
-    new Property('spring.datasource.driverClassName', 'org.h2.Driver'),
     new Property('spring.datasource.url', 'jdbc:h2:file:~/test;'),
     new Property('spring.datasource.username', 'sa'),
     new Property('spring.datasource.password', ''),
@@ -22,7 +19,7 @@ export class PropertiesComponent {
     new Property('logging.config', 'classpath:logback-spring.xml')
   ];
 
-  constructor() {
+  constructor(private propertiesService: PropertiesService) {
 
   }
 
@@ -34,16 +31,16 @@ export class PropertiesComponent {
   }
 
   onInputChanged(propertyInput: Property) {
-    for (let property of this.properties) {
-      property.clearHighlights();
-      if (property.key.indexOf(propertyInput.key) == 0) {
-        if (propertyInput.key == property.key) {
-          property.setActive();
-        } else {
-          property.setMatched();
-        }
-      }
-    }
+    // for (let property of this.getProperties()) {
+    //   property.clearHighlights();
+    //   if (propertyInput.key.length > 0 && property.key.indexOf(propertyInput.key) == 0) {
+    //     if (propertyInput.key == property.key) {
+    //       property.setActive();
+    //     } else {
+    //       property.setMatched();
+    //     }
+    //   }
+    // }
   }
 
   onPropertyPicked(property: Property) {
@@ -52,8 +49,20 @@ export class PropertiesComponent {
   }
 
   private clearPropertiesHighlights() {
-    for (let property of this.properties)
-      property.clearHighlights();
+    // for (let property of this.getProperties())
+    //   property.clearHighlights();
+  }
+
+  getProperties() {
+    this.propertiesService.getPropertiesResponse().subscribe(resp => {
+        this.properties = resp.body;
+        console.log(this.properties);
+    });
+    debugger;
+  }
+
+  getPropertiesList() {
+    this.propertiesService.getPropertiesList();
   }
 
 }

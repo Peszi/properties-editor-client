@@ -23,15 +23,16 @@ export class PropertyEditorComponent implements OnInit {
     });
   }
 
-  onClear() {
-    this.propertyKey = '';
-    this.propertyValue = '';
-  }
-
   onKeyUp(event: any) {
     if (event.key === 'Enter') {
       // Change property
     }
+  }
+
+  onClear() {
+    this.propertyKey = '';
+    this.propertyValue = '';
+    this.onInputChanged(this.propertyKey);
   }
 
   onInputChanged(value) {

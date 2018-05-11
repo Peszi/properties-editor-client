@@ -16,8 +16,7 @@ export class PropertyItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  onClick() {
-
+  isActive() : boolean {
+    return this.property.isActive();
   }
-
 }

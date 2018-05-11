@@ -4,8 +4,8 @@ export class Property {
 
   public key: string;
   public value: string;
-  private active: boolean;
-  private matched: boolean;
+  private active: boolean = false;
+  private matched: boolean = false;
 
   constructor(key: string, value: string) {
     this.key = key;
@@ -22,28 +22,20 @@ export class Property {
     this.matched = true;
   }
 
+  isActive() : boolean {
+    return this.active;
+  }
+
   clearHighlights() {
     this.active = false;
     this.matched = false;
   }
 
-  isActive() : boolean {
-    return this.active;
-  }
-
-  isMatched() : boolean {
-    return this.matched;
-  }
-
   getHighlightClass() : String {
-    // console.log("------------");
-    console.log("select " + this.isMatched() + " active " + this.isActive());
-    if (this.active) {
+    if (this.active)
       return 'table-primary';
-    }
-    if (this.matched) {
+    if (this.matched)
       return 'table-warning';
-    }
     return '';
   }
 }
