@@ -7,9 +7,16 @@ import { PropertiesComponent } from "./properties/properties.component";
 import { PropertyEditorComponent } from "./properties/property-editor/property-editor.component";
 import { PropertyItemComponent } from "./properties/property-item/property-item.component";
 import { HeaderComponent } from './header/header.component';
-import { TestComponent } from './properties/test/test.component';
 import {PropertiesService} from "./properties/properties.service";
 import {HttpClientModule} from "@angular/common/http";
+import {DropdownDirective} from "./dropdown.directive";
+import {RouterModule, Routes} from "@angular/router";
+import { UploadComponent } from './upload/upload.component';
+
+const appRoutes: Routes = [
+  { path: '', component: UploadComponent },
+  { path: 'edit', component: PropertiesComponent }
+];
 
 @NgModule({
   declarations: [
@@ -18,12 +25,14 @@ import {HttpClientModule} from "@angular/common/http";
     PropertyEditorComponent,
     PropertyItemComponent,
     HeaderComponent,
-    TestComponent
+    UploadComponent,
+    DropdownDirective
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [PropertiesService],
   bootstrap: [AppComponent]

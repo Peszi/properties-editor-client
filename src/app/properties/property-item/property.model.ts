@@ -1,15 +1,13 @@
 import {b} from "@angular/core/src/render3";
+import {Prop} from "../prop.model";
 
-export class Property {
+export class Property extends Prop {
 
-  public key: string;
-  public value: string;
   private active: boolean = false;
   private matched: boolean = false;
 
   constructor(key: string, value: string) {
-    this.key = key;
-    this.value = value;
+    super(key, value);
     this.active = false;
     this.matched = false;
   }

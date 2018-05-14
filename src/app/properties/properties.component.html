@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-6">
-    <button class="btn btn-primary" (click)="getProperties()">Load</button>
+    <button class="btn btn-primary" (click)="downloadProperties()">Load</button>
   </div>
 </div>
 <div class="row">
@@ -25,9 +25,9 @@
         </td>
       </tr>
       <!-- Properties list -->
-      <tr *ngFor="let property of properties" (click)="onPropertyPicked(property)" [ngClass]="property.getHighlightClass()">
+      <tr *ngFor="let property of this.getPropertiesList()" (click)="onPropertyPicked(property)" [ngClass]="property.getHighlightClass()">
         <td>
-          <app-property-item [property]="property" ></app-property-item>
+          <app-property-item [property]="property"></app-property-item>
         </td>
       </tr>
     </tbody>

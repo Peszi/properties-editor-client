@@ -1,5 +1,5 @@
-.sm-padding {
-  padding: 8px;
+.sortable {
+  cursor: pointer;
 }
 
 /* enable absolute positioning */
