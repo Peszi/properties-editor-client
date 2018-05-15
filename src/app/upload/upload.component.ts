@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {PropertiesService} from "../properties/properties.service";
+import {Router} from "@angular/router";
+import {Subscription} from "rxjs/Subscription";
+import {HttpEvent, HttpEventType} from "@angular/common/http";
+import {Subject} from "rxjs/Subject";
+import {Observable} from "rxjs/Observable";
 
 const DEFAULT_NAME: string = 'Choose file..';
 
@@ -11,41 +16,42 @@ const DEFAULT_NAME: string = 'Choose file..';
 export class UploadComponent implements OnInit {
 
   public isUploading: boolean;
-  public fileName: string;
+  public fileName: string = DEFAULT_NAME;
   private progressValue;
 
-  fileModel : any;
+  // private subscription: Subscription;
 
-  constructor(private propertiesService : PropertiesService) { }
+  @ViewChild('fileInput') fileInput : ElementRef;
 
-  ngOnInit() {
-    this.init();
-    setInterval(() => {
-      if (this.isUploading) {
-        this.progressValue++;
-        if (this.progressValue >= 100) {
-          this.init();
-        }
-      }
-    },100);
-  }
+  constructor(private propertiesService : PropertiesService, private router: Router) {}
 
-  init() {
-    this.fileName = DEFAULT_NAME;
-    this.progressValue = 0;
-    this.isUploading = false;
-  }
+  ngOnInit() {}
 
   onFileChange(event: any) {
     const fileInput = (<HTMLInputElement>event.target);
     if (fileInput.files.length > 0) {
       this.fileName = fileInput.files[0].name;
-      this.propertiesService.uploadPropertiesFile(fileInput.files[0]);
     }
   }
 
   onUploadFile() {
-    this.isUploading = true;
+    if (this.hasFile() && !this.isUploading) {
+      this.isUploading = true;
+      this.propertiesService.uploadPropertiesFile(this.fileInput.nativeElement.files).subscribe(
+        (progress) => this.progressValue = progress,
+        (error) => console.error(error),
+        () => { this.onUploadComplete(); }
+      );
+    } else {
+      console.log('hasFile ' + this.hasFile() + " notUploading " + !this.isUploading);
+    }
+  }
+
+  private onUploadComplete() {
+    this.isUploading = false;
+    if (this.hasFile()) {
+      this.router.navigate(['/edit']);
+    }
   }
 
   hasFile() : boolean {
@@ -55,6 +61,5 @@ export class UploadComponent implements OnInit {
   getProgress() : string {
     return this.progressValue + '%';
   }
-
 
 }

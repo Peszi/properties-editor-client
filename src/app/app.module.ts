@@ -12,6 +12,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {DropdownDirective} from "./dropdown.directive";
 import {RouterModule, Routes} from "@angular/router";
 import { UploadComponent } from './upload/upload.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 const appRoutes: Routes = [
   { path: '', component: UploadComponent },
@@ -32,6 +33,7 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [PropertiesService],

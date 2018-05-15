@@ -10,6 +10,7 @@ import {Subject} from "rxjs/Subject";
 export class PropertyEditorComponent implements OnInit {
   @Input() propertySubject:Subject<Property>;
   @Output() propertyInputChanged = new EventEmitter<Property>();
+  @Output() propertyApproved = new EventEmitter<Property>();
 
   propertyKey: string;
   propertyValue: string;
@@ -25,7 +26,7 @@ export class PropertyEditorComponent implements OnInit {
 
   onKeyUp(event: any) {
     if (event.key === 'Enter') {
-      // Change property
+      this.propertyApproved.emit(new Property(this.propertyKey, this.propertyValue));
     }
   }
 

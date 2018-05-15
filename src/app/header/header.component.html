@@ -1,29 +1,35 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary">
   <a class="navbar-brand" href="#" style="color: #fff">Properties editor</a>
+  <!-- Page Title -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <!-- Current File Name -->
+  <div class="navbar-nav">
+    <div class="navbar-text">{{ getFileName() }}</div>
+  </div>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" *ngIf="hasFile()">
     <ul class="navbar-nav ml-auto">
       <!-- Download Dropdown -->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Download</a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">.properties</a>
-          <a class="dropdown-item" href="#">.json</a>
-          <a class="dropdown-item" href="#">.yaml</a>
+          <a class="dropdown-item" href="http://localhost:8080/api/properties/download">.properties</a>
+          <a class="dropdown-item" href="http://localhost:8080/api/properties/download/json">.json</a>
+          <a class="dropdown-item" href="http://localhost:8080/api/properties/download/yaml">.yaml</a>
         </div>
       </li>
       <!-- Export Dropdown -->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Export</a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">audit.log</a>
-          <a class="dropdown-item" href="#">application.log</a>
+          <a class="dropdown-item" href="http://localhost:8080/api/logger/audit">audit.log</a>
+          <a class="dropdown-item" href="http://localhost:8080/api/logger/application">application.log</a>
         </div>
       </li>
+      <!-- Discard Link -->
       <li class="nav-item">
-        <a class="nav-link" href="#">Discard</a>
+        <a class="nav-link text-danger" (click)="onDiscard()" routerLink="/" >Discard</a>
       </li>
     </ul>
   </div>

@@ -1,3 +1,8 @@
 .navi {
   background-color:  #337ab7;
 }
+
+.navbar2 {
+  display:inline-block;
+  float:none;
+}

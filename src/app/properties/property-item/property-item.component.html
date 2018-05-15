@@ -1,13 +1,15 @@
-<div class="row sortable" >
-  <div class="col-md-7 align-bottom" >
-    {{ property.key }}
+<td [@itemState]="getItemState()">
+  <div class="row sortable" >
+    <div class="col-md-7 align-bottom" >
+      {{ property.key }}
+    </div>
+    <div class="col-md-4 align-bottom" >
+      {{ property.value }}
+    </div>
+    <div class="col-md-1" >
+      <button class="btn-sm btn-danger form-control" *ngIf="isActive()" (click)="onPropertyDelete()">
+        <img src="assets\ic_delete.png" width="18" />
+      </button>
+    </div>
   </div>
-  <div class="col-md-4 align-bottom" >
-    {{ property.value }}
-  </div>
-  <div class="col-md-1" >
-    <button class="btn-sm btn-danger form-control" *ngIf="isActive()">
-      <img src="assets\ic_delete.png" width="18" />
-    </button>
-  </div>
-</div>
+</td>

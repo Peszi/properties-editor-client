@@ -1,18 +1,20 @@
-<!-- File Picker -->
 <div class="row justify-content-center my-5">
   <div class="col-md-5">
     <div class="card bg-secondary text-white mb-3">
       <div class="card-header">Upload a properties file</div>
       <div class="card-body">
+        <!-- Card Content -->
         <div class="container">
           <div class="row mb-md-3">
+            <!-- File Input -->
             <div class="input-group">
               <div class="custom-file">
-                <input type="file" class="custom-file-input" accept=".properties" (input)="onFileChange($event)" [ngModel]="fileModel">
+                <input type="file" class="custom-file-input" accept=".properties" (input)="onFileChange($event)" #fileInput>
                 <label class="custom-file-label">{{ fileName }}</label>
               </div>
             </div>
           </div>
+          <!-- Progress Bar -->
           <div class="row mb-md-3" *ngIf="isUploading">
             <div class="col-md-12 p-0">
               <div class="progress">
@@ -20,6 +22,7 @@
               </div>
             </div>
           </div>
+          <!-- Upload Button -->
           <div class="row">
             <button class="btn btn-block btn-primary" [disabled]="!hasFile()" (click)="onUploadFile()" >Upload</button>
           </div>
