@@ -10,30 +10,36 @@ import {b} from "@angular/core/src/render3";
   animations: [
     trigger('itemState', [
       state('normal', style( {
-        'background-color': 'transparent',
-        'opacity': '1.0',
-        transform: 'translateX(0)'
+        backgroundColor: 'transparent',
+        opacity: '1.0',
+        transform: 'translateX(0)',
+        borderRadius: '0px'
         })),
       state('active', style( {
-        'background-color': '#b8daff',
-        'opacity': '1.0',
-        transform: 'translateX(0)'
+        backgroundColor: '#b8daff',
+        opacity: '1.0',
+        transform: 'translateX(0)',
+        borderRadius: '15px'
         })),
       state('matched', style( {
-        'background-color': '#ffeeba',
-        'opacity': '1.0',
-        transform: 'translateX(0)'
+        backgroundColor: '#ffeeba',
+        opacity: '1.0',
+        transform: 'translateX(0)',
+        borderRadius: '15px'
       })),
       state('appear', style( {
-        'background-color': '#b8ffda',
-        'opacity': '0.0',
-        transform: 'translateX(-500px)'
+        backgroundColor: 'green', // #b8ffda
+        opacity: '0.0',
+        transform: 'translateX(-500px)',
+        borderRadius: '0px'
       })),
       state('disappear', style( {
-        'opacity': '0.0',
-        transform: 'translateX(-500px)'
+        backgroundColor: 'red',
+        opacity: '0.0',
+        transform: 'translateX(-500px)',
+        borderRadius: '0px'
       })),
-      transition('* => active', animate(250)),
+      transition('* => active', animate(500)),
       transition('* => matched', animate(500)),
       transition('appear => normal', animate(400)),
       transition('* => normal', animate(300)),

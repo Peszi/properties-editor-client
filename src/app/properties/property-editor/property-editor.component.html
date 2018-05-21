@@ -1,11 +1,24 @@
 <div class="row">
   <div class="col-md-7 pr-0" >
-    <input class="form-control" placeholder="add a new property" (ngModelChange)="onInputChanged($event)" (keyup)="onKeyUp($event)" [(ngModel)]="propertyKey"/>
+    <input
+      class="form-control"
+      placeholder="add a new property"
+      (ngModelChange)="onInputKeyChanged($event)"
+      (keyup)="onKeyUp($event)"
+      [(ngModel)]="propertyKey"/>
   </div >
   <div class="col-md-4 pr-0">
-    <input class="form-control" placeholder="value" (keyup)="onKeyUp($event)" [(ngModel)]="propertyValue"/>
+    <input
+      class="form-control"
+      placeholder="value"
+      [ngClass]="getInputValueClass()"
+      (keyup)="onKeyUp($event)"
+      (ngModelChange)="onInputValueChanged($event)"
+      [(ngModel)]="propertyValue"/>
   </div >
   <div class="col-md-1" >
-    <button class="btn btn-success form-control" (click)="onClear()">Clear</button>
+    <button
+      class="btn btn-success form-control"
+      (click)="onClear()">Clear</button>
   </div >
 </div>

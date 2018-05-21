@@ -27,9 +27,13 @@ export class PropertiesService {
     const subject = new Subject<number>();
     this.httpClient.post('http://localhost:8080/api/properties/upload', formData, { observe: 'events', responseType: 'json', reportProgress: true })
       .subscribe(
-      (event: HttpEvent<any>) => { this.getEventMessage(event, subject) },
-        error => { subject.error(error); },
-      () => { this.fileName = files[0].name; subject.complete(); }
+        (event: HttpEvent<any>) => { this.getEventMessage(event, subject) },
+        (error) => { subject.error(error); },
+      () => {
+          this.fileName = files[0].name;
+          subject.complete();
+          this.auditLogsList = [];
+        }
       );
     return subject;
   }
@@ -61,6 +65,8 @@ export class PropertiesService {
   // Modify Properties
 
   modifyProperty(property: Property) {
+    if (this.hasProperty(property))
+      return;
     let params = new HttpParams().set('key', property.key).append('value', property.value)
     this.httpClient.post<Prop[]>('http://localhost:8080/api/properties',  null, { params: params, observe: 'body', responseType: 'json' })
       .pipe(map((props) => {
@@ -92,7 +98,7 @@ export class PropertiesService {
     return this.propertiesList;
   }
 
-  getAuditLogsList() : string[] {
+  getAuditLogsList() : String[] {
     return this.auditLogsList;
   }
 
@@ -126,6 +132,15 @@ export class PropertiesService {
     for (let property of this.propertiesList) {
       if (newProperty.key === property.key
         && newProperty.value === property.value) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  hasPropertyChanged(newProperty: Property) {
+    for (let property of this.propertiesList) {
+      if (newProperty.key === property.key && newProperty.value != property.value) {
         return true;
       }
     }

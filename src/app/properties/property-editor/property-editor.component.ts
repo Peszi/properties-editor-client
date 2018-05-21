@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Property} from "../property-item/property.model";
 import {Subject} from "rxjs/Subject";
 
@@ -8,8 +8,10 @@ import {Subject} from "rxjs/Subject";
   styleUrls: ['./property-editor.component.css'],
 })
 export class PropertyEditorComponent implements OnInit {
+  @Input() isValueChanged: boolean;
   @Input() propertySubject:Subject<Property>;
-  @Output() propertyInputChanged = new EventEmitter<Property>();
+  @Output() propertyKeyInputChanged = new EventEmitter<Property>();
+  @Output() propertyValueInputChanged = new EventEmitter<Property>();
   @Output() propertyApproved = new EventEmitter<Property>();
 
   propertyKey: string;
@@ -33,11 +35,22 @@ export class PropertyEditorComponent implements OnInit {
   onClear() {
     this.propertyKey = '';
     this.propertyValue = '';
-    this.onInputChanged(this.propertyKey);
+    this.onInputKeyChanged(this.propertyKey);
+    this.onInputValueChanged(this.propertyValue);
   }
 
-  onInputChanged(value) {
-    this.propertyInputChanged.emit(new Property(value, this.propertyValue));
+  onInputKeyChanged(value) {
+    this.propertyKeyInputChanged.emit(new Property(value, this.propertyValue));
   }
 
+  onInputValueChanged(value) {
+    this.propertyValueInputChanged.emit(new Property(this.propertyKey, value));
+  }
+
+  getInputValueClass() {
+    if (this.isValueChanged) {
+      return 'is-invalid';
+    }
+    return 'ng-valid';
+  }
 }

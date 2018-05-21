@@ -10,6 +10,7 @@ import {p} from "@angular/core/src/render3";
   templateUrl: './properties.component.html',
 })
 export class PropertiesComponent implements OnInit {
+  isValueChanged: boolean = false;
   propertySubject:Subject<Property> = new Subject();
 
   constructor(private propertiesService: PropertiesService, private router: Router) {}
@@ -22,8 +23,13 @@ export class PropertiesComponent implements OnInit {
 
   // Editor Event
 
-  onInputChanged(propertyInput: Property) {
+  onInputKeyChanged(propertyInput: Property) {
     this.highlightMatches(propertyInput);
+    this.checkPropertyKey(propertyInput);
+  }
+
+  onInputValueChanged(propertyInput: Property) {
+   this.checkPropertyKey(propertyInput);
   }
 
   // Property Events
@@ -34,7 +40,8 @@ export class PropertiesComponent implements OnInit {
 
   onPropertyPicked(property: Property) {
     this.propertySubject.next(property);
-    this.onInputChanged(property);
+    this.onInputKeyChanged(property);
+    this.onInputValueChanged(property);
   }
 
   onPropertyDelete(property: Property) {
@@ -47,7 +54,19 @@ export class PropertiesComponent implements OnInit {
     return this.propertiesService.getPropertiesList();
   }
 
+  getAuditLogsList() : String[] {
+    return this.propertiesService.getAuditLogsList();
+  }
+
+  hasAuditLogs() {
+    return (this.propertiesService.getAuditLogsList().length > 0);
+  }
+
   // Utility
+
+  private checkPropertyKey(property: Property) {
+    this.isValueChanged = this.propertiesService.hasPropertyChanged(property);
+  }
 
   private highlightMatches(propertyInput: Property) {
     for (let property of this.propertiesService.getPropertiesList()) {
